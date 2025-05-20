@@ -1,10 +1,11 @@
 import axios from "axios";
-import SearchBar from "../components/SearchBar/SearchBar";
 import type { Movie } from "../types/movie";
 
 interface FetchMovies {
   page: number;
   results: Movie[];
+  total_pages: number;
+  total_results: number;
 }
 
 export async function fetchMovies(query: string): Promise<Movie[]> {
