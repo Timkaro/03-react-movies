@@ -2,7 +2,7 @@ import css from "./App.module.css";
 // import axios from "axios";
 import type { Movie } from "../../types/movie";
 import { fetchMovies } from "../../services/movieService";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -13,8 +13,8 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const handleSearch = async (query: string) => {
@@ -47,13 +47,6 @@ export default function App() {
   const handleCloseModal = () => {
     setSelectedMovie(null);
   };
-  useEffect(() => {
-    document.body.style.overflow = selectedMovie ? "hidden" : "auto";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [selectedMovie]);
 
   return (
     <div className={css.app}>
