@@ -2,7 +2,7 @@ import css from "./App.module.css";
 // import axios from "axios";
 import type { Movie } from "../../types/movie";
 import { fetchMovies } from "../../services/movieService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -28,7 +28,7 @@ export default function App() {
     setError(false);
     setMovies([]);
     try {
-      const fetchedMovies = await fetchMovies(query);
+      const fetchedMovies = await fetchMovies(trimmedQuery);
       if (fetchedMovies.length === 0) {
         toast.error("No movies found for your request.");
       }
@@ -42,13 +42,18 @@ export default function App() {
 
   const handleSelect = (movie: Movie) => {
     setSelectedMovie(movie);
-    document.body.style.overflow = "hidden";
   };
 
   const handleCloseModal = () => {
     setSelectedMovie(null);
-    document.body.style.overflow = "auto";
   };
+  useEffect(() => {
+    document.body.style.overflow = selectedMovie ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedMovie]);
 
   return (
     <div className={css.app}>

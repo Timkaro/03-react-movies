@@ -2,10 +2,15 @@ import axios from "axios";
 import SearchBar from "../components/SearchBar/SearchBar";
 import type { Movie } from "../types/movie";
 
+interface FetchMovies {
+  page: number;
+  results: Movie[];
+}
+
 export async function fetchMovies(query: string): Promise<Movie[]> {
   const token = import.meta.env.VITE_TMDB_TOKEN;
 
-  const response = await axios.get(
+  const response = await axios.get<FetchMovies>(
     `https://api.themoviedb.org/3/search/movie`,
     {
       params: {
